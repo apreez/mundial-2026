@@ -19,50 +19,79 @@ DATA_FILE = "apuestas.json"
 API_BASE   = "https://api.football-data.org/v4"
 WC_2026_ID = 2000  # ID del Mundial FIFA 2026 en football-data.org
 
-# Equipos participantes del Mundial 2026 con códigos de bandera
-# Incluye nombres en español E inglés (la API devuelve en inglés)
+# Equipos participantes del Mundial 2026 — nombres en español, inglés, TLA y variantes
 EQUIPOS = {
-    # Español
-    "Argentina":    "🇦🇷", "Brasil":        "🇧🇷", "Francia":     "🇫🇷",
-    "España":       "🇪🇸", "Inglaterra":    "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Alemania":    "🇩🇪",
-    "Portugal":     "🇵🇹", "Países Bajos":  "🇳🇱", "Uruguay":     "🇺🇾",
-    "Colombia":     "🇨🇴", "México":        "🇲🇽", "Estados Unidos":"🇺🇸",
-    "Canadá":       "🇨🇦", "Marruecos":     "🇲🇦", "Senegal":     "🇸🇳",
-    "Japón":        "🇯🇵", "Corea del Sur": "🇰🇷", "Australia":   "🇦🇺",
-    "Ecuador":      "🇪🇨", "Chile":         "🇨🇱", "Perú":        "🇵🇪",
-    "Venezuela":    "🇻🇪", "Bolivia":       "🇧🇴", "Paraguay":    "🇵🇾",
-    "Suiza":        "🇨🇭", "Bélgica":       "🇧🇪", "Italia":      "🇮🇹",
-    "Croacia":      "🇭🇷", "Turquía":       "🇹🇷", "Austria":     "🇦🇹",
-    "Polonia":      "🇵🇱", "Dinamarca":     "🇩🇰",
-    # Inglés (nombres que devuelve football-data.org)
-    "Brazil":       "🇧🇷", "France":        "🇫🇷", "Spain":       "🇪🇸",
-    "England":      "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Germany":       "🇩🇪", "Netherlands":  "🇳🇱",
-    "Mexico":       "🇲🇽", "United States": "🇺🇸", "USA":         "🇺🇸",
-    "Canada":       "🇨🇦", "Morocco":       "🇲🇦", "Japan":       "🇯🇵",
-    "South Korea":  "🇰🇷", "Korea Republic":"🇰🇷", "Peru":        "🇵🇪",
-    "Switzerland":  "🇨🇭", "Belgium":       "🇧🇪", "Italy":       "🇮🇹",
-    "Croatia":      "🇭🇷", "Turkey":        "🇹🇷", "Turkiye":     "🇹🇷",
-    "Poland":       "🇵🇱", "Denmark":       "🇩🇰", "Austria":     "🇦🇹",
-    "Venezuela":    "🇻🇪", "Bolivia":       "🇧🇴", "Paraguay":    "🇵🇾",
-    "Ecuador":      "🇪🇨", "Chile":         "🇨🇱", "Colombia":    "🇨🇴",
-    "Uruguay":      "🇺🇾", "Senegal":       "🇸🇳", "Australia":   "🇦🇺",
-    "Portugal":     "🇵🇹", "Argentina":     "🇦🇷",
+    # América
+    "Argentina":       "🇦🇷", "Brazil":          "🇧🇷", "Brasil":          "🇧🇷",
+    "Mexico":          "🇲🇽", "México":          "🇲🇽", "MX":              "🇲🇽",
+    "United States":   "🇺🇸", "USA":             "🇺🇸", "Estados Unidos":  "🇺🇸", "US":  "🇺🇸",
+    "Canada":          "🇨🇦", "Canadá":          "🇨🇦", "CA":              "🇨🇦",
+    "Colombia":        "🇨🇴", "CO":              "🇨🇴",
+    "Uruguay":         "🇺🇾", "UY":              "🇺🇾",
+    "Ecuador":         "🇪🇨", "EC":              "🇪🇨",
+    "Chile":           "🇨🇱", "CL":              "🇨🇱",
+    "Peru":            "🇵🇪", "Perú":            "🇵🇪", "PE":              "🇵🇪",
+    "Venezuela":       "🇻🇪", "VE":              "🇻🇪",
+    "Bolivia":         "🇧🇴", "BO":              "🇧🇴",
+    "Paraguay":        "🇵🇾", "PY":              "🇵🇾",
+    "Panama":          "🇵🇦", "Panamá":          "🇵🇦", "PA":              "🇵🇦",
+    "Costa Rica":      "🇨🇷", "CR":              "🇨🇷",
+    "Honduras":        "🇭🇳", "HN":              "🇭🇳",
+    "Jamaica":         "🇯🇲", "JM":              "🇯🇲",
+    # Europa
+    "France":          "🇫🇷", "Francia":         "🇫🇷", "FR":              "🇫🇷",
+    "Spain":           "🇪🇸", "España":          "🇪🇸", "ES":              "🇪🇸",
+    "England":         "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Inglaterra":      "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "ENG":             "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    "Germany":         "🇩🇪", "Alemania":        "🇩🇪", "DE":              "🇩🇪",
+    "Portugal":        "🇵🇹", "PT":              "🇵🇹",
+    "Netherlands":     "🇳🇱", "Países Bajos":    "🇳🇱", "NL":              "🇳🇱",
+    "Belgium":         "🇧🇪", "Bélgica":         "🇧🇪", "BE":              "🇧🇪",
+    "Italy":           "🇮🇹", "Italia":          "🇮🇹", "IT":              "🇮🇹",
+    "Croatia":         "🇭🇷", "Croacia":         "🇭🇷", "HR":              "🇭🇷",
+    "Switzerland":     "🇨🇭", "Suiza":           "🇨🇭", "CH":              "🇨🇭",
+    "Austria":         "🇦🇹", "AT":              "🇦🇹",
+    "Poland":          "🇵🇱", "Polonia":         "🇵🇱", "PL":              "🇵🇱",
+    "Denmark":         "🇩🇰", "Dinamarca":       "🇩🇰", "DK":              "🇩🇰",
+    "Serbia":          "🇷🇸", "RS":              "🇷🇸",
+    "Ukraine":         "🇺🇦", "Ucrania":         "🇺🇦", "UA":              "🇺🇦",
+    "Romania":         "🇷🇴", "Rumania":         "🇷🇴", "RO":              "🇷🇴",
+    "Slovakia":        "🇸🇰", "Eslovaquia":      "🇸🇰", "SK":              "🇸🇰",
+    "Turkey":          "🇹🇷", "Turkiye":         "🇹🇷", "Turquía":         "🇹🇷", "TR": "🇹🇷",
+    "Greece":          "🇬🇷", "Grecia":          "🇬🇷", "GR":              "🇬🇷",
+    "Scotland":        "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "Escocia":         "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "SCO":             "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    "Wales":           "🏴󠁧󠁢󠁷󠁬󠁳󠁿", "Gales":           "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+    "Czech Republic":  "🇨🇿", "Czechia":         "🇨🇿", "República Checa": "🇨🇿", "CZ": "🇨🇿",
+    "Hungary":         "🇭🇺", "Hungría":         "🇭🇺", "HU":              "🇭🇺",
+    "Albania":         "🇦🇱", "AL":              "🇦🇱",
+    "Georgia":         "🇬🇪", "GE":              "🇬🇪",
+    "Slovenia":        "🇸🇮", "Eslovenia":       "🇸🇮", "SI":              "🇸🇮",
+    # África
+    "Morocco":         "🇲🇦", "Marruecos":       "🇲🇦", "MA":              "🇲🇦",
+    "Senegal":         "🇸🇳", "SN":              "🇸🇳",
+    "Nigeria":         "🇳🇬", "NG":              "🇳🇬",
+    "Egypt":           "🇪🇬", "Egipto":          "🇪🇬", "EG":              "🇪🇬",
+    "Cameroon":        "🇨🇲", "Camerún":         "🇨🇲", "CM":              "🇨🇲",
+    "South Africa":    "🇿🇦", "Sudáfrica":       "🇿🇦", "ZA":              "🇿🇦", "RSA": "🇿🇦",
+    "Ghana":           "🇬🇭", "GH":              "🇬🇭",
+    "Ivory Coast":     "🇨🇮", "Côte d'Ivoire":   "🇨🇮", "CI":              "🇨🇮",
+    "Algeria":         "🇩🇿", "Argelia":         "🇩🇿", "DZ":              "🇩🇿",
+    "Tunisia":         "🇹🇳", "Túnez":           "🇹🇳", "TN":              "🇹🇳",
+    "Mali":            "🇲🇱", "ML":              "🇲🇱",
+    "Congo DR":        "🇨🇩", "DR Congo":        "🇨🇩", "CD":              "🇨🇩",
+    "Tanzania":        "🇹🇿", "TZ":              "🇹🇿",
+    # Asia
+    "Japan":           "🇯🇵", "Japón":           "🇯🇵", "JP":              "🇯🇵",
+    "South Korea":     "🇰🇷", "Korea Republic":  "🇰🇷", "Corea del Sur":   "🇰🇷", "KR": "🇰🇷",
+    "Saudi Arabia":    "🇸🇦", "Arabia Saudita":  "🇸🇦", "SA":              "🇸🇦",
+    "Iran":            "🇮🇷", "IR":              "🇮🇷",
+    "Australia":       "🇦🇺", "AU":              "🇦🇺",
+    "New Zealand":     "🇳🇿", "Nueva Zelanda":   "🇳🇿", "NZ":              "🇳🇿",
+    "Qatar":           "🇶🇦", "QA":              "🇶🇦",
+    "China":           "🇨🇳", "CN":              "🇨🇳",
+    "Indonesia":       "🇮🇩", "ID":              "🇮🇩",
+    "Uzbekistan":      "🇺🇿", "Uzbekistán":      "🇺🇿", "UZ":              "🇺🇿",
 }
 
-# Lista limpia solo para el selector de apuestas (sin duplicados inglés)
-EQUIPOS_SELECTOR = {
-    "Argentina":    "🇦🇷", "Brasil":        "🇧🇷", "Francia":     "🇫🇷",
-    "España":       "🇪🇸", "Inglaterra":    "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Alemania":    "🇩🇪",
-    "Portugal":     "🇵🇹", "Países Bajos":  "🇳🇱", "Uruguay":     "🇺🇾",
-    "Colombia":     "🇨🇴", "México":        "🇲🇽", "Estados Unidos":"🇺🇸",
-    "Canadá":       "🇨🇦", "Marruecos":     "🇲🇦", "Senegal":     "🇸🇳",
-    "Japón":        "🇯🇵", "Corea del Sur": "🇰🇷", "Australia":   "🇦🇺",
-    "Ecuador":      "🇪🇨", "Chile":         "🇨🇱", "Perú":        "🇵🇪",
-    "Venezuela":    "🇻🇪", "Bolivia":       "🇧🇴", "Paraguay":    "🇵🇾",
-    "Suiza":        "🇨🇭", "Bélgica":       "🇧🇪", "Italia":      "🇮🇹",
-    "Croacia":      "🇭🇷", "Turquía":       "🇹🇷", "Austria":     "🇦🇹",
-    "Polonia":      "🇵🇱", "Dinamarca":     "🇩🇰",
-}
 
 # ── CSS personalizado ─────────────────────────────────────────────────────────
 st.markdown("""
@@ -240,8 +269,13 @@ def bandera_pais(nombre) -> str:
 
 def formatear_partido(m: dict) -> dict:
     """Extrae campos relevantes de un partido de la API."""
-    home = m.get("homeTeam", {}).get("name", "?")
-    away = m.get("awayTeam", {}).get("name", "?")
+    home_team = m.get("homeTeam", {})
+    away_team = m.get("awayTeam", {})
+    home = home_team.get("name") or home_team.get("shortName") or home_team.get("tla") or "?"
+    away = away_team.get("name") or away_team.get("shortName") or away_team.get("tla") or "?"
+    # Para banderas intentar con todos los campos disponibles
+    home_tla = home_team.get("tla", "")
+    away_tla = away_team.get("tla", "")
     score = m.get("score", {})
     full  = score.get("fullTime", {})
     half  = score.get("halfTime", {})
@@ -264,7 +298,7 @@ def formatear_partido(m: dict) -> dict:
 
     return {
         "home": home, "away": away,
-        "flag_home": bandera_pais(home), "flag_away": bandera_pais(away),
+        "flag_home": bandera_pais(home) or bandera_pais(home_tla), "flag_away": bandera_pais(away) or bandera_pais(away_tla),
         "goles_home": goles_home, "goles_away": goles_away,
         "penalties_home": penalties_home, "penalties_away": penalties_away,
         "status": status, "fecha": fecha, "hora": hora,
