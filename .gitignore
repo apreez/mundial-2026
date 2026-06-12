@@ -1,0 +1,17 @@
+# Secretos — NUNCA subir a GitHub
+.streamlit/secrets.toml
+
+# Datos de apuestas (opcional: comentar si quieres versionarlos)
+# apuestas.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
