@@ -20,7 +20,37 @@ API_BASE   = "https://api.football-data.org/v4"
 WC_2026_ID = 2000  # ID del Mundial FIFA 2026 en football-data.org
 
 # Equipos participantes del Mundial 2026 con códigos de bandera
+# Incluye nombres en español E inglés (la API devuelve en inglés)
 EQUIPOS = {
+    # Español
+    "Argentina":    "🇦🇷", "Brasil":        "🇧🇷", "Francia":     "🇫🇷",
+    "España":       "🇪🇸", "Inglaterra":    "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Alemania":    "🇩🇪",
+    "Portugal":     "🇵🇹", "Países Bajos":  "🇳🇱", "Uruguay":     "🇺🇾",
+    "Colombia":     "🇨🇴", "México":        "🇲🇽", "Estados Unidos":"🇺🇸",
+    "Canadá":       "🇨🇦", "Marruecos":     "🇲🇦", "Senegal":     "🇸🇳",
+    "Japón":        "🇯🇵", "Corea del Sur": "🇰🇷", "Australia":   "🇦🇺",
+    "Ecuador":      "🇪🇨", "Chile":         "🇨🇱", "Perú":        "🇵🇪",
+    "Venezuela":    "🇻🇪", "Bolivia":       "🇧🇴", "Paraguay":    "🇵🇾",
+    "Suiza":        "🇨🇭", "Bélgica":       "🇧🇪", "Italia":      "🇮🇹",
+    "Croacia":      "🇭🇷", "Turquía":       "🇹🇷", "Austria":     "🇦🇹",
+    "Polonia":      "🇵🇱", "Dinamarca":     "🇩🇰",
+    # Inglés (nombres que devuelve football-data.org)
+    "Brazil":       "🇧🇷", "France":        "🇫🇷", "Spain":       "🇪🇸",
+    "England":      "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Germany":       "🇩🇪", "Netherlands":  "🇳🇱",
+    "Mexico":       "🇲🇽", "United States": "🇺🇸", "USA":         "🇺🇸",
+    "Canada":       "🇨🇦", "Morocco":       "🇲🇦", "Japan":       "🇯🇵",
+    "South Korea":  "🇰🇷", "Korea Republic":"🇰🇷", "Peru":        "🇵🇪",
+    "Switzerland":  "🇨🇭", "Belgium":       "🇧🇪", "Italy":       "🇮🇹",
+    "Croatia":      "🇭🇷", "Turkey":        "🇹🇷", "Turkiye":     "🇹🇷",
+    "Poland":       "🇵🇱", "Denmark":       "🇩🇰", "Austria":     "🇦🇹",
+    "Venezuela":    "🇻🇪", "Bolivia":       "🇧🇴", "Paraguay":    "🇵🇾",
+    "Ecuador":      "🇪🇨", "Chile":         "🇨🇱", "Colombia":    "🇨🇴",
+    "Uruguay":      "🇺🇾", "Senegal":       "🇸🇳", "Australia":   "🇦🇺",
+    "Portugal":     "🇵🇹", "Argentina":     "🇦🇷",
+}
+
+# Lista limpia solo para el selector de apuestas (sin duplicados inglés)
+EQUIPOS_SELECTOR = {
     "Argentina":    "🇦🇷", "Brasil":        "🇧🇷", "Francia":     "🇫🇷",
     "España":       "🇪🇸", "Inglaterra":    "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "Alemania":    "🇩🇪",
     "Portugal":     "🇵🇹", "Países Bajos":  "🇳🇱", "Uruguay":     "🇺🇾",
@@ -343,7 +373,7 @@ with st.sidebar:
     st.markdown("### 👥 Participantes")
     for nombre, data in apuestas_all.items():
         equipo = data.get("equipo","?")
-        flag   = EQUIPOS.get(equipo, "🏳️")
+        flag   = EQUIPOS_SELECTOR.get(equipo, "🏳️")
         st.markdown(f"**{flag} {nombre}** → {equipo}")
 
 # ── HEADER ────────────────────────────────────────────────────────────────────
@@ -388,7 +418,7 @@ with tab1:
         for i, (nombre, data) in enumerate(ranking, 1):
             equipo  = data.get("equipo", "?")
             monto   = data.get("monto", 0)
-            flag    = EQUIPOS.get(equipo, "🏳️")
+            flag    = EQUIPOS_SELECTOR.get(equipo, "🏳️")
             cls     = pos_class.get(i, "")
             fecha_r = data.get("fecha_registro", "")
             nota    = data.get("nota", "")
@@ -467,8 +497,8 @@ with tab3:
     with st.form("form_registro"):
         nombre_nuevo  = st.text_input("👤 Tu nombre", placeholder="Ej: Anibal")
         equipo_nuevo  = st.selectbox("🏳️ Elige tu equipo campeón",
-                                      sorted(EQUIPOS.keys()),
-                                      format_func=lambda x: f"{EQUIPOS[x]} {x}")
+                                      sorted(EQUIPOS_SELECTOR.keys()),
+                                      format_func=lambda x: f"{EQUIPOS_SELECTOR.get(x,"🏳️")} {x}")
         monto_nuevo   = st.number_input("💰 Monto de apuesta (CLP)", min_value=1000, max_value=5_000_000,
                                          value=10_000, step=1000)
         nota_nueva    = st.text_input("📝 Comentario opcional", placeholder="Ej: ¡Argentina campeón!")
@@ -496,7 +526,7 @@ with tab3:
                 "fecha_registro": datetime.now().strftime("%d/%m/%Y %H:%M"),
             }
             guardar_apuestas(apuestas_reg)
-            flag = EQUIPOS.get(equipo_nuevo, "🏳️")
+            flag = EQUIPOS_SELECTOR.get(equipo_nuevo, "🏳️")
             st.success(f"🎉 **{nombre_nuevo}** apostó **${monto_nuevo:,.0f} CLP** por {flag} **{equipo_nuevo}**. ¡Buena suerte!")
             st.balloons()
 
@@ -522,9 +552,9 @@ with tab4:
             current = apuestas_edit[nombre_edit]
             with st.form("form_edicion"):
                 equipo_edit = st.selectbox("🏳️ Nuevo equipo campeón",
-                                            sorted(EQUIPOS.keys()),
-                                            index=sorted(EQUIPOS.keys()).index(current.get("equipo", sorted(EQUIPOS.keys())[0])),
-                                            format_func=lambda x: f"{EQUIPOS[x]} {x}")
+                                            sorted(EQUIPOS_SELECTOR.keys()),
+                                            index=sorted(EQUIPOS_SELECTOR.keys()).index(current.get("equipo", sorted(EQUIPOS_SELECTOR.keys())[0])),
+                                            format_func=lambda x: f"{EQUIPOS_SELECTOR.get(x,"🏳️")} {x}")
                 monto_edit  = st.number_input("💰 Nuevo monto (CLP)", min_value=1000, max_value=5_000_000,
                                                value=int(current.get("monto", 10000)), step=1000)
                 nota_edit   = st.text_input("📝 Comentario", value=current.get("nota",""))
@@ -540,6 +570,6 @@ with tab4:
                     apuestas_edit[nombre_edit]["password_hash"] = hash_pass(pass_nueva)
                 apuestas_edit[nombre_edit]["ultima_edicion"] = datetime.now().strftime("%d/%m/%Y %H:%M")
                 guardar_apuestas(apuestas_edit)
-                flag = EQUIPOS.get(equipo_edit, "🏳️")
+                flag = EQUIPOS_SELECTOR.get(equipo_edit, "🏳️")
                 st.success(f"✅ Apuesta actualizada: {flag} {equipo_edit} por ${monto_edit:,.0f} CLP")
                 st.session_state["edit_autorizado"] = None
