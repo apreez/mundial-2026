@@ -196,10 +196,15 @@ def obtener_standings() -> list:
         pass
     return []
 
-def bandera_pais(nombre: str) -> str:
+def bandera_pais(nombre) -> str:
     """Intenta encontrar la bandera del equipo por nombre."""
+    if not nombre or not isinstance(nombre, str):
+        return "🏳️"
+    nombre_lower = nombre.lower().strip()
+    if nombre in EQUIPOS:
+        return EQUIPOS[nombre]
     for k, v in EQUIPOS.items():
-        if k.lower() in nombre.lower() or nombre.lower() in k.lower():
+        if k.lower() in nombre_lower or nombre_lower in k.lower():
             return v
     return "🏳️"
 
